@@ -30,6 +30,17 @@ pub fn App(cx: Scope) -> impl IntoView {
     }
 }
 
+// create function to connect to server and send data
+fn connect_to_server() {
+    // connect to tcp stream
+    let mut stream = TcpStream::connect("localhost:8081").unwrap();
+    // read from stream and collect into variable
+    let mut buffer = [0; 1024];
+    stream.read(&mut buffer).unwrap();
+    // print out the buffer
+    println!("Received: {}", String::from_utf8_lossy(&buffer[..]));
+}
+
 /// Renders the home page of your application.
 #[component]
 fn HomePage(cx: Scope) -> impl IntoView {
@@ -46,7 +57,13 @@ fn HomePage(cx: Scope) -> impl IntoView {
     println!("Received: {}", String::from_utf8_lossy(&buffer[..]));
     
     // write to stream
-    stream.write(b"Hello from the client!").unwrap();
+    stream.write(b"username \n").unwrap();
+    stream.flush().unwrap();
+    stream.write(b"password \n").unwrap();
+    stream.flush().unwrap();
+    stream.write(b"Hello from the client!! \n").unwrap();
+    stream.flush().unwrap();
+
     println!("Sent Hello, awaiting reply...");
 
     view! { cx,
