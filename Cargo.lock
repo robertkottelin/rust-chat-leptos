@@ -1424,6 +1424,7 @@ dependencies = [
  "cfg-if",
  "console_error_panic_hook",
  "console_log",
+ "js-sys",
  "leptos",
  "leptos_actix",
  "leptos_meta",
@@ -1431,6 +1432,7 @@ dependencies = [
  "log",
  "simple_logger",
  "wasm-bindgen",
+ "web-sys",
 ]
 
 [[package]]
